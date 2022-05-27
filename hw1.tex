@@ -1,0 +1,174 @@
+
+\documentclass[11pt]{article}
+\title{Phil 320\\Homework 1}
+\author{Mathew Balsdon / 21041694}
+\date{27 January 2022}%you can either leave this blank or write in the date you want to appear on the assignment
+
+%this just makes sure that all the standard math fonts/definitions/modes can be used.
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+
+%using fullpage does what you think it does, forces the full page to be used rather than the \lLaTeX norm, which is a reasonably narrow column.
+\usepackage{fullpage}
+\usepackage[dvipsnames]{xcolor}
+
+%these commands allow you to declare theorems/lemmas/corollaries/definitions. They will all be numbered sequentially. That is, your document will remember what the last theorem number used was, and, the next theorem you write will have the subsequent number. As it is set up here, theorems, lemmas, etc. all share the same numbering sequence. That means, if you have a theorem and then a corollary, the theorem will be numbered as 1 as the corollary as 2.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+%To declare a theorem you can write:
+%
+%\begin{theorem}
+%There are infinitely many prime numbers.
+%\end{theorem}
+%
+%\begin{proof}
+%Assume that this is not the case. That is, assume that there is some greatest prime $p$. Then consider the number we get by taking 
+%
+%$$n=(2 \times 3 \times 5 \times 7 \times 11 \dots \times p) +1$$
+%
+%Clearly, $n$ cannot be prime, by our assumption. Therefore, it is composite. But the fundamental theorem of arithmetic tells us that every positive integer has a (unique) prime factorization. This means that $n$ is evenly divided by some prime number $q$. But notice that $q$ cannot be any of the primes between $2$ and $p$, because these will all have a remainder of $1$. Therefore, $n$ must be a prime factor greater than $p$. This is a contradiction.
+%
+%\end{proof}
+
+
+
+
+%Everything up to hear was just setting things up. Everything that you will actually see occurs between the \begin{document} and \end{document} tags
+\begin{document}
+
+\maketitle
+%This places  your name, the date, and the rest of the information you might have entered at the top of the file. 
+
+\noindent
+1. Let $R$ be a partial order (reflexive, transitive, and anti-symmetric) on a set $X$. Recall that $Id_X = \{\langle x, x \rangle : x \in X\}$. Let $R^-=R\setminus Id_X$. Prove that $R^-$ is a strict order (irreflexive, asymmetric, transitive). \\
+
+\color{RoyalBlue}
+\begin{proof}
+Assume that $R$ is a reflexive, transitive, anti-symmetric order on a set $X$. We also define $R^-=R\setminus Id_X$. \\\\
+Since $R$ is anti-symmetric, there are no two unique elements $x,y \in X$, $x \neq y$, such that $\langle x, y \rangle \in R$ and $\langle y, x \rangle \in R$ at the same time. However, it still may contain pairs $x \in X: \langle x, x \rangle$, since $x = x$. $R^-$ is equal to $R$ without such pairs (by definition of $Id_X$), therefore we can guarantee that $R^-$ is asymmetric. \\\\
+Since $R$ is reflexive, for all $x \in X$, $\langle x, x \rangle \in R$. All of these ordered pairs can be found in $Id_X$, defined as $\{\langle x, x \rangle : x \in X\}$. Therefore, $R^-$ must be irreflexive because it is the difference between $R$ and $Id_X$, so there are no pairs $\langle x, x \rangle \in R^-$. \\\\
+Transitivity deals with cases where for some elements $x$ and $y$ in $R$, $\langle x, y \rangle \in R$ and $\langle y, z \rangle \in R$. In the case where $x = y = z$, all three pairs $\langle x, x \rangle$, $\langle y, y \rangle$, $\langle z, z \rangle$ are not present in $R^-$, so transitivity holds vacuously. In the case where $x = y$, the pair $\langle x, z \rangle$ still exists in $R^-$, so transitivity is not broken. In the case where $x \neq y \neq z$, the pairs $\langle x, y \rangle$, $\langle y, z \rangle$, $\langle x, z \rangle$ are still present in $R^-$, so transitivity is not broken. Therefore, $R^-$ is transitive.
+\end{proof}
+\color{black}
+
+
+\newpage
+\noindent
+2. Prove both of the following:
+
+\begin{enumerate}
+\renewcommand{\labelenumi}{\alph{enumi}.}
+\item If $f:A \to B$ is bijective, an inverse $g$ of $f$ exists. (You will have to define such a $g$, show it is a well-defined function, and show that it really is the inverse of $f$.)
+\item Show that if $f:A \to B$ has an inverse $g$, then $f$ is bijective.
+\end{enumerate}
+
+\color{RoyalBlue}
+\begin{proof}
+Let $f: A \to B$ be a bijective function. Then, for some $x \in A$, $y \in B$, define $g: B \to A$ as $g(y) = \{x: f(x) = y\}$. Since $f$ is bijective, there is a unique mapping from every $x \in A$ to every $y \in B$. $g$ maps each of those $y \in B$ back to each $x \in A$ and is therefore well-defined. $f(g(y)) = f(\{x: f(x) = y\}) = y$ and $g(f(x)) = \{x: f(x) = f(x)\} = x$, so $g$ is the inverse of $f$.
+\end{proof}
+
+\begin{proof}
+Assume $f: A \to B$ has an inverse $g: B \to A$. Assume that we have some arbitrary $a \in A$ and $b \in B$ such that $g(b) = a$. By the definition of inverses, $f(a) = f(g(b)) = b$. So, $f$ is surjective. Now, assume some $a_1 \in A$ and $a_2 \in A$ such that $f(a_1) = f(a_2)$. Let $f(a_1) = b$ and $g(b) = x$. Then, $g(b) = g(f(a_1)) = g(f(a_2)) = x$. By the definition of inverses, $g(f(a_1)) = a_1$ and $g(f(a_2)) = a_2$, therefore $a_1 = a_2$.
+\end{proof}
+\color{black}
+
+
+\newpage
+\noindent
+3. Show that if $g: Y \to X$ and $g' : Y \to X$ are both inverses of $f: X \to Y$, then $g = g'$. That is, for all $y \in Y$, $g(y) = g'(y)$. (In other words, inverses are unique.)
+
+\color{RoyalBlue}
+\begin{proof}
+Let $g: Y \to X$ and $g': Y \to X$ both be inverses of $f: X \to Y$. For clarity, also let $f^{-1}: Y \to X$ be the inverse of $f: X \to Y$. By definition of inverses, we know that $f(g(y)) = y$ and that $f(g'(y)) = y$. We can then do the following:
+\begin{align*}
+    f(g(y)) & = f(g'(y)) & \text{since both are equal to $y$}\\
+    f^{-1}(f(g(y)) & = f^{-1}(f(g'(y)) & \text{applying the inverse to both sides}\\
+    g(y) & = g'(y) & \text{by definition of inverses}
+\end{align*}
+Therefore, as shown above, $g(y) = g'(y)$.
+\end{proof}
+\color{black}
+
+
+\newpage
+\noindent
+4. Show that if $f: X \to Y$ and $g: Y \to Z$ are both injective, then $g \circ f: X \to Z$ is injective. \\
+
+\color{RoyalBlue}
+\begin{proof}
+Assume that $f: X \to Y$ and $g: Y \to Z$ are both injective. Furthermore, assume that we have some arbitrary elements $x_1$, $x_2 \in X$ such that $g(f(x_1)) = g(f(x_2))$. By definition of injectivity, we know that for all $y \in Y$, if $g(y_1) = g(y_2)$, then $y_1 = y_2$. The function $g$ is injective, therefore $f(x_1) = f(x_2)$. By the same definition, we know that for all $x \in X$, if $f(x_1) = f(x_2)$, then $x_1 = x_2$. The function $f$ is injective, therefore $x_1 = x_2$, showing that $g \circ f$ is injective.
+\end{proof}
+\color{black}
+
+
+\newpage
+\noindent
+5. Show that if $f: X \to Y$ and $g: Y \to Z$ are both surjective, then $g \circ f: X \to Z$ is surjective. (Notice that, in conjunction with the previous problem, this implies that the composition of bijections is a bijection.)
+
+\color{RoyalBlue}
+\begin{proof}
+Assume $f: X \to Y$ and $g: Y \to X$ are both surjective. Since $g$ is surjective, we know that for all elements $z \in Z$, there is some $y \in Y$ such that $g(y) = z$. Since $f$ is surjective, we know that for all elements $y \in Y$, there is some $x \in X$ such that $f(x) = y$. So, for all $z \in Z$, there is some $x \in X$ such that $g(f(x)) = z$, meaning $g \circ f$ is surjective.
+\end{proof}
+\color{black}
+
+
+\newpage
+\noindent
+6. Prove that if a finite set $X$ has $n$ elements, then $X^k$ has $n^k$ elements for $k \geq 1$. (Hint: use induction on $k$.)
+
+\color{RoyalBlue}
+\begin{proof}
+Assume that a finite set $X$ has $n$ elements. We will show that $X^k$ has $n^k$ elements for $k \geq 1$: \\
+\textbf{Base case:} For $k = 1$, the set $X^1 = X$ has $n^1 = n$ elements. This is self-obvious. \\
+\textbf{Inductive hypothesis:} Assume that $X^k$ has $n^k$ elements. \\
+\textbf{Inductive step:} By the recursive definition of the cartesian $n$th power of a set, we can write $X^{k+1}$ as $X^k \times X$. By definition, for any two sets $A$ and $B$, $|A \times B| = |A| \cdot |B|$, therefore we can write $|X^k \times X| = |X^k| \cdot |X|$. From our base case and assumptions, we know that this equals $n^k \cdot n$, which can be rewritten as $n^{k+1}$.
+\end{proof}
+\color{black}
+
+
+\newpage
+\noindent
+7. Show that $\mathbb{N}^\omega$ is non-enumerable.
+
+\color{RoyalBlue}
+\begin{proof}
+Assume that $\mathbb{N}^\omega$ could be enumerated by the list $N_1, N_2, N_3, ...$, and define $f: \mathbb{N}^\omega \to \mathbb{B}^\omega$ as a function where $f(N)$ denotes the sequence $s_k$ such that
+\begin{align}
+    s_k(n) & = 
+    \begin{cases} 
+    1 & \text{if N(n) = 1} \\
+    0 & \text{if N(n) = 0} \\
+    0 & \text{otherwise}
+    \end{cases}
+\end{align}
+$\mathbb{B}^\omega$ is a subset of $\mathbb{N}^\omega$, since $0 \in \mathbb{N}$ and $1 \in \mathbb{N}$. The function $f$ simply maps all $N \in \mathbb{B}^\omega$ to the same sequence $s_k \in \mathbb{B}^\omega$, otherwise it defaults to an arbitrarily chosen value. Aside from the "0 otherwise" value, which accounts for any $n \in \mathbb{N}$ that isn't 0 or 1, $f$ is an identity function. This means $f$ is surjective. Now consider the sequence
+\begin{align}
+    f(N_1), f(N_2), f(N_3), ...
+\end{align}
+Since $f$ is surjective, every member of $\mathbb{B}^\omega$ will appear on the list as the result of $f(N_i)$ for some $i$, therefore the list enumerates $\mathbb{B}^\omega$. Since $\mathbb{B}^\omega$ is non-enumerable, however, our assumption must be false. That is, $\mathbb{N}^\omega$ is non-enumerable.
+\end{proof}
+\color{black}
+
+
+\newpage
+\noindent
+8. Show that if $X$ and $Y$ are both enumerable, then so is $X \cup Y$.
+
+\color{RoyalBlue}
+\begin{proof}
+Assume that we have two enumerable sets $X$ and $Y$. Since they are enumerable, we know they have surjective functions $f: \mathbb{Z}^+ \to X$ and $g: \mathbb{Z}^+ \to Y$. We define the function $\vartheta: \mathbb{Z}^+ \to X \cup Y$ as such:
+\begin{align}
+    \vartheta(n) & = 
+    \begin{cases} 
+    f(\frac{n}{2}) & \text{if $n$ is even} \\
+    g(\frac{n+1}{2}) & \text{if $n$ is odd}
+    \end{cases}
+\end{align}
+$\vartheta$ maps to $codomain(f)$ and $codomain(g)$. These are equal to $range(f) = X$ and $range(g) = Y$ since they are surjective, which means $\vartheta$ maps to $X \cup Y$, so it is surjective and therefore enumerable.
+\end{proof}
+\color{black}
+
+
+\end{document}

@@ -1,0 +1,190 @@
+
+\documentclass[11pt]{article}
+\title{Phil 320\\Homework 2}
+\author{Mathew Balsdon / 21041694}
+\date{17 February 2022}%you can either leave this blank or write in the date you want to appear on the assignment
+
+%this just makes sure that all the standard math fonts/definitions/modes can be used.
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+
+%using fullpage does what you think it does, forces the full page to be used rather than the \lLaTeX norm, which is a reasonably narrow column.
+\usepackage{fullpage}
+\usepackage[dvipsnames]{xcolor}
+
+%these commands allow you to declare theorems/lemmas/corollaries/definitions. They will all be numbered sequentially. That is, your document will remember what the last theorem number used was, and, the next theorem you write will have the subsequent number. As it is set up here, theorems, lemmas, etc. all share the same numbering sequence. That means, if you have a theorem and then a corollary, the theorem will be numbered as 1 as the corollary as 2.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+%To declare a theorem you can write:
+%
+%\begin{theorem}
+%There are infinitely many prime numbers.
+%\end{theorem}
+%
+%\begin{proof}
+%Assume that this is not the case. That is, assume that there is some greatest prime $p$. Then consider the number we get by taking 
+%
+%$$n=(2 \times 3 \times 5 \times 7 \times 11 \dots \times p) +1$$
+%
+%Clearly, $n$ cannot be prime, by our assumption. Therefore, it is composite. But the fundamental theorem of arithmetic tells us that every positive integer has a (unique) prime factorization. This means that $n$ is evenly divided by some prime number $q$. But notice that $q$ cannot be any of the primes between $2$ and $p$, because these will all have a remainder of $1$. Therefore, $n$ must be a prime factor greater than $p$. This is a contradiction.
+%
+%\end{proof}
+
+
+
+
+%Everything up to hear was just setting things up. Everything that you will actually see occurs between the \begin{document} and \end{document} tags
+\begin{document}
+
+\maketitle
+%This places  your name, the date, and the rest of the information you might have entered at the top of the file. 
+
+\noindent
+1. [5 pts] Let $\mathcal{L} = \{c, f, A\}$ where $c$ is a constant symbol, $f$ is a one-place function symbol, and $A$ is a two-place predicate symbol. Let $M$ be the structure given by
+
+\begin{enumerate}
+\item The domain of $M$ is $\{1,2,3\}$;
+\item $c^M = 3$;
+\item $f^M(1) = 2, f^M(2) = 3, f^M(3) = 2$;
+\item $A^M = \{\langle1, 2\rangle, \langle2, 3\rangle, \langle3, 3\rangle\}$.
+\end{enumerate}
+
+\noindent
+(a) Let $s(v) = 1$ for all variables $v$. Find out whether
+\begin{center}
+$M,s \models \exists x(A(f(z), c) \rightarrow \forall y(A(y,x) \vee A(f(y),x)))$
+\end{center}
+and explain your answer. \\
+
+\color{RoyalBlue}
+\noindent
+By definition of satisfiability, we have
+\begin{align*}
+    & M,s \models \exists x(A(f(z), c) \rightarrow \forall y(A(y,x) \vee A(f(y),x))) \\
+    \text{iff } & M,s' \models (A(f(z), c) \rightarrow \forall y(A(y,x) \vee A(f(y),x))) \text{ for some $s' \sim_x s$} \\
+    \text{iff } & M,s' \not\models (A(f(z), c) \text{ or } M,s' \models \forall y(A(y,x) \vee A(f(y),x)) \text{ for some $s' \sim_x s$}
+\end{align*}
+Focusing on the right side of the conditional, we have
+\begin{align*}
+    & M,s' \models \forall y(A(y,x) \vee A(f(y),x)) \text{ for some $s' \sim_x s$} \\
+    \text{iff } & M,s'' \models (A(y, x) \vee A(f(y), x)) \text{ for all $s''\sim_y s'$, and for some $s'\sim_x s$} \\
+    \text{iff } & M,s'' \models A(y, x) \text{ or } M,s'' \models A(f(y), x) \text{ for all $s''\sim_y s'$, and for some $s'\sim_x s$}
+\end{align*}
+Assume $s'$ is an x-variant of $s$ such that $s(x) = 3$. There are three possible y-variants of $s'$, since the domain of $M$ has three elements. In the variant where $s''(y) = 3$, we have 
+\begin{align*}
+    A(y,x) & = \langle Val_{s''}^{M}(y), Val_{s''}^{M}(x) \rangle \\
+    & = \langle s''(y), s''(x) \rangle \\
+    & = \langle 3, 3 \rangle
+\end{align*}
+which is contained in $A^M$. In the variant where $s''(y) = 2$, we have the same steps but ending with $\langle 2, 3 \rangle$, which is contained in $A^M$. In the variant where $s''(y) = 1$, we have
+\begin{align*}
+    A(f(y), x) & = \langle Val_{s''}^{M}(f(y)), Val_{s''}^{M}(x) \rangle \\
+    & = \langle f^{M}(Val_{s''}^{M}(y)), Val_{s''}^{M}(x) \rangle \\
+    & = \langle f^{M}(1), 3 \rangle \\
+    & = \langle 2, 3 \rangle
+\end{align*}
+which is contained in $A^M$. Thus, for all $s''\sim_y s'$, and for some $s'\sim_x s$, $M,s'' \models (A(y, x) \vee A(f(y), x))$. Working all the way back up our chain of biconditionals, we have 
+\begin{align*}
+    M,s \models \exists x(A(f(z), c) \rightarrow \forall y(A(y,x) \vee A(f(y),x)))
+\end{align*}
+\color{black}
+
+\noindent
+(b) Give a different structure and variable assignment in which the formula is not satisfied. \\
+
+\color{RoyalBlue}
+\noindent
+Let $s$ be a variable assignment such that $s(v)=2$ for all variables $v$, and let $M$ be the structure defined as
+
+\begin{enumerate}
+\item The domain of $M$ is $\{1,2\}$;
+\item $c^M = 2$;
+\item $f^M(1) = 1, f^M(2) = 2$;
+\item $A^M = \{\langle2,2\rangle\}$
+\end{enumerate}
+
+\noindent
+For any $s'\sim_x s$, the right side of the conditional is not satisfied under the variable assignment $s''\sim_y s'$ s.t. $s''(y)=1$ since $A(y,x)$ and $A(f(y),x)$ evaluate to ordered pairs $\langle1, s''(x)\rangle$ which is not contained in $A^M$. The left side of the conditional evaluates to $\langle2,2\rangle$, which means $M, s$ satisfies it. We have that $M,s' \models (A(f(z), c)$ and $M,s' \not\models \forall y(A(y,x) \vee A(f(y),x))$ for all $s' \sim_x s$, therefore the formula is not satisfied by $M, s$.
+\\
+\color{black}
+
+\noindent
+2. [10 pts] Prove all of the following: \\
+
+\noindent
+(a) $\Gamma \models \bot$ iff $\Gamma$ is unsatisfiable.
+\color{RoyalBlue}
+\begin{proof}
+We begin by proving the right-to-left case. Assume that $\Gamma$ is unsatisfiable. Then, there are no structures that entail $\Gamma$ (def 7.25). This means that for every structure $M$ such that $M \models \Gamma$, $M \models \bot$ (there are none, so it holds vacuously). It follows that $\Gamma \models \bot$ (def 7.24). \\
+
+\noindent
+We prove left-to-right by contradiction - Assume that $\Gamma \models \bot$, and assume that $\Gamma$ is satisfiable. We know that there is some $M$ such that $M \models \Gamma$ (def 7.25). We also know that $M \not\models \bot$ (def 7.11). Therefore, there is some $M$ such that $M \models \Gamma$ and $M \not\models \bot$, and so $\Gamma \not\models \bot$ (def 7.24). This contradicts our original assumption, so $\Gamma$ is unsatisfiable.
+\end{proof}
+\color{black}
+
+
+\newpage
+\noindent
+(b) $\Gamma \cup \{A\} \models \bot$ iff $\Gamma \models \neg A$.
+\color{RoyalBlue}
+\begin{proof}
+Assume that $\Gamma \models \neg A$. We have:
+\begin{align*}
+    & \Gamma \models \neg A \\
+    \text{iff } & \Gamma \cup \{\neg\neg A\} \text{ is unsatisfiable (prop 7.27)} \\
+    \text{iff } & \Gamma \cup \{A\} \text{ is unsatisfiable (since $A \equiv \neg\neg A$)} \\
+    \text{iff } & \Gamma \cup \{A\} \models \bot \text{(proven in 2a; the question before this one)}
+\end{align*}
+All of the above relations are biconditional, so we simply reverse the steps for the left-to-right case.
+\end{proof}
+\color{black}
+
+\noindent
+(c) If $c$ does not occur in either $A$ or $\Gamma$, then $\Gamma \models \forall x A$ iff $\Gamma \models A[c/x]$.
+\color{RoyalBlue}
+\begin{proof}
+Assume $\Gamma \models A[c/x]$, and that $c$ does not occur in either $A$ or $\Gamma$. Since $\Gamma \models A[c/x]$ for any arbitrary $c$, it follows that $\Gamma \models A$ for any value of $x$, since $x$ can be substituted out for any $c$. Therefore, $\Gamma \models \forall x A$. \\
+
+\noindent
+Assume $\Gamma \models \forall x A$, and that $c$ does not occur in either $A$ or $\Gamma$. If we take $A[c/x]$, it will be entailed by $\Gamma$ since by our assumption, $\Gamma \models A$ for any $x$. Therefore, $\Gamma \models A[c/x]$.
+\end{proof}
+\color{black}
+
+\noindent
+3. [15 pts] Let $\mathcal{L}$ be a first-order language containing two 3-place predicate symbols $S$ and $P$ (and no other non-logical symbols). Consider the $\mathcal{L}$-structure $N$ where the domain of $N = \mathbb{N}$ (the set of natural numbers), $S^N = \{\langle a,b,c\rangle \in \mathbb{N}^3: a+b=c\}$, and $P^N = \{\langle a,b,c\rangle \in \mathbb{N}^3: a \times b = c\}$. \\
+
+\noindent
+(a) Give a formula $\varphi(x)$ in the language $\mathcal{L}$ (i.e. an $\mathcal{L}$-formula) with one free variable such that for any variable assignment $s$:
+\begin{center}
+$N,s \models \varphi(x)$ iff $s(x)=2$
+\end{center}
+\color{RoyalBlue}
+Choose $\varphi(x) = \exists y(S(x, x, y) \wedge P(x, x, y))$. $2$ is the only natural number whose addition to itself equals its multiplication with itself ($2+2=2\times2$). \\
+\color{Black}
+
+\noindent
+(b) Give an $\mathcal{L}$-formula $\psi(x)$ with one free variable such that for any variable assignment $s$:
+\begin{center}
+    $N,s \models \psi(x)$ iff $s(x)$ is a prime number
+\end{center}
+\color{RoyalBlue}
+Choose $\psi(x) = \forall y \forall z (\neg P(y, z, x) \wedge \neg(y=x) \wedge \neg(z=x))$. In other words, there are no $y,z$ whose product is $x$ and that are not equal to $x$ itself. Given that this is the definition of a prime number, $N,s$ will only entail $\psi(x)$ if $s(x)$ is prime. \\
+\color{Black}
+
+\noindent
+(c) Give an $\mathcal{L}$-sentence stating "there are infinitely many prime twins" (a prime twin is a pair of prime numbers $p,q$ such that $p+2=q$). (Hint: use parts $a$ and $b$.) \\
+
+\color{RoyalBlue}
+\noindent
+For ease of reading: \\
+Let $\varphi(t) = \exists y (S(t,t,y) \wedge P(t,t,y))$ \\
+Let $\psi_1(p_1) = \forall a_1 \forall b_1 (\neg P(a_1,b_1,p_1) \wedge \neg (a_1=p_1) \wedge \neg (b_1=p_1))$ \\
+Let $\psi_2(p_2) = \forall a_2 \forall b_2 (\neg P(a_2,b_2,p_2) \wedge \neg (a_2=p_2) \wedge \neg (b_2=p_2))$ \\
+\noindent
+Finally, we choose our $\mathcal{L}$-sentence to be $\varphi(t) \wedge \psi_1(p_1) \wedge \psi_2(p_2) \wedge P(p_1, t, p_2)$. $\varphi$ ensures $s(t)=2$, and $\psi_1,\psi_2$ ensure $s(p_1)$ and $s(p_2)$ are prime. The final conjunct is satisfied when $p_1+t=p_2$.
+\color{Black}
+
+
+\end{document}

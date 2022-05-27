@@ -1,0 +1,277 @@
+
+\documentclass[11pt]{article}
+\title{Phil 320\\Homework 3}
+\author{Mathew Balsdon / 21041694}
+\date{24 March 2022}%you can either leave this blank or write in the date you want to appear on the assignment
+
+%this just makes sure that all the standard math fonts/definitions/modes can be used.
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{bussproofs}
+\usepackage[shortlabels]{enumitem}
+
+%using fullpage does what you think it does, forces the full page to be used rather than the \lLaTeX norm, which is a reasonably narrow column.
+\usepackage{fullpage}
+\usepackage[dvipsnames]{xcolor}
+
+%these commands allow you to declare theorems/lemmas/corollaries/definitions. They will all be numbered sequentially. That is, your document will remember what the last theorem number used was, and, the next theorem you write will have the subsequent number. As it is set up here, theorems, lemmas, etc. all share the same numbering sequence. That means, if you have a theorem and then a corollary, the theorem will be numbered as 1 as the corollary as 2.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+%To declare a theorem you can write:
+%
+%\begin{theorem}
+%There are infinitely many prime numbers.
+%\end{theorem}
+%
+%\begin{proof}
+%Assume that this is not the case. That is, assume that there is some greatest prime $p$. Then consider the number we get by taking 
+%
+%$$n=(2 \times 3 \times 5 \times 7 \times 11 \dots \times p) +1$$
+%
+%Clearly, $n$ cannot be prime, by our assumption. Therefore, it is composite. But the fundamental theorem of arithmetic tells us that every positive integer has a (unique) prime factorization. This means that $n$ is evenly divided by some prime number $q$. But notice that $q$ cannot be any of the primes between $2$ and $p$, because these will all have a remainder of $1$. Therefore, $n$ must be a prime factor greater than $p$. This is a contradiction.
+%
+%\end{proof}
+
+
+
+
+%Everything up to hear was just setting things up. Everything that you will actually see occurs between the \begin{document} and \end{document} tags
+\begin{document}
+
+\maketitle
+%This places  your name, the date, and the rest of the information you might have entered at the top of the file. 
+
+\noindent
+1. Give $\textbf{LK}$ derivations of the following sequents. The first two are 2.5 pts each, the third is 5. (If you want, you can break the third problem down by making subproofs of various sequents and showing how they can be combined to obtain the desired derivation.) \\
+
+(a) $\forall x(\varphi(x) \rightarrow \psi) \Rightarrow (\exists y \varphi(y) \rightarrow \psi)$ \\
+
+\color{RoyalBlue}
+\begin{prooftree}
+\AxiomC{$(\varphi(t) \rightarrow \psi) \Rightarrow (\varphi(t) \rightarrow \psi)$}
+\RightLabel{$\exists$R}
+\UnaryInfC{$(\varphi(t) \rightarrow \psi) \Rightarrow (\exists y \varphi(y) \rightarrow \psi$)}
+\RightLabel{$\forall$L}
+\UnaryInfC{$\forall x (\varphi(x) \rightarrow \psi) \Rightarrow (\exists y \varphi(y) \rightarrow \psi)$}
+\end{prooftree}
+\color{black}
+
+(b) $\Rightarrow \forall x \forall y ((x=y \wedge \varphi(x)) \rightarrow \varphi(y))$ \\
+
+\color{RoyalBlue}
+\begin{prooftree}
+\AxiomC{$\varphi(a) \Rightarrow \varphi(a)$}
+\RightLabel{$\wedge$L}
+\UnaryInfC{$(a=a \wedge \varphi(a)) \Rightarrow \varphi(a)$}
+\RightLabel{$\rightarrow$R}
+\UnaryInfC{$\Rightarrow (a=a \wedge \varphi(a)) \rightarrow \varphi(a)$}
+\RightLabel{$\forall$R}
+\UnaryInfC{$\Rightarrow \forall y ((a=y \wedge \varphi(a)) \rightarrow \varphi(y))$}
+\RightLabel{$\forall$R}
+\UnaryInfC{$\Rightarrow \forall x \forall y ((x=y \wedge \varphi(x)) \rightarrow \varphi(y))$}
+\end{prooftree}
+\color{black}
+
+(c) $\exists x \varphi(x) \wedge \forall y \forall z ((\varphi(y) \wedge \varphi(z)) \rightarrow y = z) \Rightarrow \exists x (\varphi(x) \wedge \forall y (\varphi(y) \rightarrow y = x))$ \\
+
+\color{RoyalBlue}
+Couldn't solve this one. Here is my attempt:
+\begin{prooftree}
+\AxiomC{$\varphi(a) \Rightarrow \varphi(a)$}
+\AxiomC{$\varphi(b), \varphi(a) \Rightarrow (b=a)$}
+\RightLabel{$\rightarrow$R}
+\UnaryInfC{$\varphi(a) \Rightarrow \varphi(b) \rightarrow (b=a)$}
+\RightLabel{$\forall$R}
+\UnaryInfC{$\varphi(a) \Rightarrow \forall y (\varphi(y) \rightarrow (y=a))$}
+\RightLabel{$\wedge$R}
+\BinaryInfC{$\varphi(a) \Rightarrow \varphi(a) \wedge \forall y (\varphi(y) \rightarrow (y=a))$}
+\RightLabel{$\exists$L}
+\UnaryInfC{$\varphi(a) \Rightarrow \exists x [\varphi(x) \wedge \forall y (\varphi(y) \rightarrow (y=x))]$}
+\RightLabel{$\exists$L}
+\UnaryInfC{$\exists x \varphi(x) \Rightarrow \exists x [\varphi(x) \wedge \forall y (\varphi(y) \rightarrow (y=x))]$}
+\RightLabel{$\wedge$L}
+\UnaryInfC{$\exists x \varphi(x) \wedge \forall y \forall z [(\varphi(y) \wedge \varphi(z)) \rightarrow (y=z)] \Rightarrow \exists x [\varphi(x) \wedge \forall y (\varphi(y) \rightarrow (y=x))]$}
+\end{prooftree}
+\color{black}
+
+
+\newpage
+
+
+\noindent
+2. Complete the proof of soundness of $\textbf{LK}$ by addressing the cases omitted in the text. \\
+\color{RoyalBlue}
+\textbf{Case 1.3)} The last inference is $\neg$R:
+\begin{prooftree}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\noLine
+\UnaryInfC{$\varphi, \Gamma \Rightarrow \Delta$}
+\RightLabel{$\neg$R}
+\UnaryInfC{$\Gamma \Rightarrow \Delta, \neg \varphi$}
+\end{prooftree}
+By the induction hypothesis, $\varphi, \Gamma \Rightarrow \Delta$ is valid. Therefore, for every structure $\mathcal{M}$, either:
+\begin{enumerate}[a)]
+    \item For some $C \in \Gamma$, $\mathcal{M} \not\models C$;
+    \item For some $C \in \Delta$, $\mathcal{M} \models C$;
+    \item $\mathcal{M} \not\models \varphi$;
+\end{enumerate}
+Consider arbitrary structure $\mathcal{M}$. With $\Theta = \Gamma$ and $\Xi = \Delta \cup \{\neg \varphi\}$, we have:
+\begin{enumerate}[a)]
+    \item There is some $C \in \Theta$ such that $\mathcal{M} \not \models C$ since $\Theta = \Gamma$.
+    \item There is some $C \in \Xi$ such that $\mathcal{M} \models C$ since $\Delta \subseteq \Xi$.
+    \item By semantic definition, $\mathcal{M} \models \neg \varphi$ since $\mathcal{M} \not\models \varphi$. So, there is an $A \in \Xi$ such that $\mathcal{M} \models A$
+\end{enumerate}
+In each case $\Theta \Rightarrow \Xi$ is valid. \\
+
+\noindent \textbf{Case 1.8)} The last inference is $\exists$R:
+\begin{prooftree}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\noLine
+\UnaryInfC{$\Gamma \Rightarrow \Delta, \varphi(t)$}
+\RightLabel{$\exists$R}
+\UnaryInfC{$\Gamma \Rightarrow \Delta, \exists x\varphi(x)$}
+\end{prooftree}
+By the induction hypothesis, $\Gamma \Rightarrow \Delta, \varphi(t)$ is valid. Therefore, for every structure $\mathcal{M}$, either:
+\begin{enumerate}[a)]
+    \item For some $C \in \Gamma$, $\mathcal{M} \not\models C$;
+    \item For some $C \in \Delta$, $\mathcal{M} \models C$;
+    \item $\mathcal{M} \models \varphi(t)$;
+\end{enumerate}
+Consider arbitrary structure $\mathcal{M}$. With $\Theta = \Gamma$ and $\Xi = \Delta \cup \{\exists x\varphi(x)\}$), we have:
+\begin{enumerate}[a)]
+    \item There is some $C \in \Theta$ such that $\mathcal{M} \not \models C$ since $\Theta = \Gamma$.
+    \item There is some $C \in \Xi$ such that $\mathcal{M} \models C$ since $\Delta \subseteq \Xi$.
+    \item By proposition 7.30, if $\mathcal{M} \models \varphi(t)$ then $\mathcal{M} \models \exists x\varphi(x)$. 
+\end{enumerate}
+In each case $\Theta \Rightarrow \Xi$ is valid. \\
+
+
+\newpage
+
+
+\noindent \textbf{Case 1.10)} The last inference is $\exists$L:
+\begin{prooftree}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\noLine
+\UnaryInfC{$\varphi(a), \Gamma \Rightarrow \Delta$}
+\RightLabel{$\exists$L}
+\UnaryInfC{$\exists x\varphi(x), \Gamma \Rightarrow \Delta$}
+\end{prooftree}
+By the induction hypothesis, $\varphi(a), \Gamma \Rightarrow \Delta$ is valid. Therefore, for every structure $\mathcal{M}$, either:
+\begin{enumerate}[a)]
+    \item For some $C \in \Gamma$, $\mathcal{M} \not\models C$;
+    \item For some $C \in \Delta$, $\mathcal{M} \models C$;
+    \item $\mathcal{M} \not\models \varphi(a)$;
+\end{enumerate}
+Consider arbitrary structure $\mathcal{M}$. With $\Theta = \{\varphi(a)\} \cup \Gamma$ and $\Xi = \Delta$, we have:
+\begin{enumerate}[a)]
+    \item There is some $C \in \Theta$ such that $\mathcal{M} \not \models C$ since $\Theta = \Gamma$.
+    \item There is some $C \in \Xi$ such that $\mathcal{M} \models C$ since $\Delta \subseteq \Xi$.
+    \item We have that $\mathcal{M} \not\models \varphi(a)$ and we want to show that $\mathcal{M} \not\models \exists x\varphi(x)$. Assume, by contradiction, that $\mathcal{M} \models \exists x\varphi(x)$. Then by semantic definition, $\mathcal{M},s' \models \varphi(x)$ for some $s'\sim_xs$. Let $\mathcal{M}'$ be the same as $\mathcal{M}$, except that $a^{\mathcal{M}'}=s(x)$. Since $a \not\in \varphi(x)$, $\mathcal{M},s'\models \varphi(x)$ iff $\mathcal{M}',s'\models \varphi(x)$ (Corollary 7.19). Therefore, we have that $\mathcal{M}',s'\models \varphi(x)$. Furthermore, we have that $\mathcal{M}',s \models \varphi(a)$. But, since $a$ is not in $\Gamma$ or $\Delta$ by the eigenvariable condition, and $\mathcal{M}$ and $\mathcal{M}'$ agree on everything but $a$, $\mathcal{M}',s \not\models \varphi(a)$. This is a contradiction, therefore it must be the case that $\mathcal{M} \not\models \exists x\varphi(x)$. 
+    
+\end{enumerate}
+In each case $\Theta \Rightarrow \Xi$ is valid. \\
+
+\noindent \textbf{Case 2.3)} The last inference is $\vee$L:
+\begin{prooftree}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\noLine\UnaryInfC{$\varphi, \Gamma \Rightarrow \Delta$}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\noLine\UnaryInfC{$\psi, \Gamma \Rightarrow \Delta$}
+\RightLabel{$\vee$L}
+\BinaryInfC{$\varphi \vee \psi, \Gamma \Rightarrow \Delta$}
+\end{prooftree}
+Consider a structure $\mathcal{M}$. If $\mathcal{M}$ satisfies $\Gamma \Rightarrow \Delta$, we are done. So suppose it doesn't. Since $\varphi, \Gamma \Rightarrow \Delta$ is valid by the induction hypothesis, $\mathcal{M} \not\models \varphi$. Similarly, since $\psi, \Gamma \Rightarrow \Delta$ is valid, $\mathcal{M} \not\models \psi$. But then (by contraposition of the semantic definition) $\mathcal{M} \not\models \varphi \vee \psi$.
+\color{black}
+
+
+\newpage
+
+
+\noindent
+3. Add to our first-order language a new binary \textit{logical} connective: $\uparrow$. Obviously, we will have to modify our definitions accordingly (e.g. add the clause: "if $\varphi$ and $\psi$ are formulas, then so is $(\varphi\uparrow\psi)$" to the definition of a formula). For our definition of satisfaction, let us add the following clause: 
+\begin{center}
+    $\mathcal{M},s\models\varphi\uparrow\psi$ iff $\mathcal{M},s\not\models\varphi$ or $\mathcal{M},s\not\models\psi$
+\end{center}
+a. Give sequent rules for $\uparrow$. Let \textbf{LKS} be the sequent system obtained by adding these rules to \textbf{LK}.
+\color{RoyalBlue}
+\begin{prooftree}
+\AxiomC{$\Gamma \Rightarrow \Delta, \varphi$}
+\AxiomC{$\Gamma \Rightarrow \Delta, \psi$}
+\RightLabel{$\uparrow$L}
+\BinaryInfC{$\varphi\uparrow\psi, \Gamma \Rightarrow \Delta$}
+\end{prooftree}
+\begin{prooftree}
+\AxiomC{$\varphi, \Gamma \Rightarrow \Delta$}
+\RightLabel{$\uparrow$R}
+\UnaryInfC{$\Gamma \Rightarrow \Delta, \varphi\uparrow\psi$}
+\end{prooftree}
+\begin{prooftree}
+\AxiomC{$\psi, \Gamma \Rightarrow \Delta$}
+\RightLabel{$\uparrow$R}
+\UnaryInfC{$\Gamma \Rightarrow \Delta, \varphi\uparrow\psi$}
+\end{prooftree}
+\color{black}
+
+\noindent
+b. Prove that your \textbf{LKS} is sound. (Just indicate clearly how you are adding to the main soundness proof for \textbf{LK}.) \\
+\color{RoyalBlue}
+\textbf{Case 1.11)} The last inference is $\uparrow$R:
+\begin{prooftree}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\noLine\UnaryInfC{$\varphi, \Gamma \Rightarrow \Delta$}
+\RightLabel{$\uparrow$R}
+\UnaryInfC{$\Gamma \Rightarrow \Delta, \varphi\uparrow\psi$}
+\end{prooftree}
+Consider a structure $\mathcal{M}$. If it satisfies $\Gamma \Rightarrow \Delta$ then we are done. Suppose that it doesn't. Since $\varphi, \Gamma \Rightarrow \Delta$ is valid by the induction hypothesis, $\mathcal{M} \not\models \varphi$. By semantic definition of $\uparrow$, then, $\mathcal{M} \models \varphi\uparrow\psi$. The case where $\varphi\uparrow\psi$ is inferred from $\psi$ is handled the same way, changing $\varphi$ to $\psi$. \\
+
+\noindent\textbf{Case 2.4)} The last inference is $\uparrow$L:
+\begin{prooftree}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\noLine\UnaryInfC{$\Gamma \Rightarrow \Delta, \varphi$}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\noLine\UnaryInfC{$\Gamma \Rightarrow \Delta, \psi$}
+\RightLabel{$\uparrow$L}
+\BinaryInfC{$\varphi \uparrow \psi, \Gamma \Rightarrow \Delta$}
+\end{prooftree}
+Consider a structure $\mathcal{M}$. If it satisfies $\Gamma \Rightarrow \Delta$ then we are done. Suppose that it doesn't. Since $\Gamma \Rightarrow \Delta, \varphi$ is valid by the induction hypothesis, $\mathcal{M} \models \varphi$. Similarly, since $\Gamma \Rightarrow \Delta, \psi$ is valid, $\mathcal{M} \models \psi$. By contraposition of the semantic definition for $\uparrow$, we have that $\mathcal{M} \not\models \varphi\uparrow\psi$. \\
+\color{black}
+
+
+\newpage
+
+
+\noindent
+4. Show that $\Gamma \models \varphi$ iff there is a finite $\Gamma_0 \subseteq \Gamma$ such that $\Gamma_0 \models \varphi$. (You may assume soundness and completeness.)
+\color{RoyalBlue}
+\begin{proof}
+Assume that $\Gamma \models \varphi$. By completeness, we know $\Gamma \vdash \varphi$. Since this is the case, there exists a finite subset $\Gamma_0 \subseteq \Gamma$ (with its elements in some sequence) such that $\mathbf{LK}$ derives $\Gamma_0 \Rightarrow \varphi$. Since $\Gamma_0$ is a finite subset of itself, $\Gamma_0 \vdash \varphi$. By soundness then, $\Gamma_0 \models \varphi$. \\
+
+\noindent Assume there is a finite $\Gamma_0 \subseteq \Gamma$ such that $\Gamma_0 \models \varphi$. By completeness, $\Gamma_0 \vdash \varphi$. Since $\Gamma_0 \subseteq \Gamma$ and $\Gamma_0 \vdash \varphi$, then $\Gamma \vdash \varphi$ by monotonicity.
+
+
+\end{proof}
+\color{black}
+
+\noindent
+5. Prove that in the term model we constructed for the completeness proof (without identity), we have that for every closed term $\tau$,
+\begin{center}
+    $Val^{\mathcal{M}_{\Gamma^*}}(\tau) = \tau$
+\end{center}
+\color{RoyalBlue}
+\begin{proof}
+Assume that $\mathcal{M}_{\Gamma^*}$ is the term model of a maximal, saturated, and consistent set $\Gamma^*$ in a language $\mathcal{L}$, and that $\tau$ is a closed term. We perform induction on $\tau$:
+
+\begin{enumerate}[1)]
+    \item $\tau \equiv c$ where $c$ is a constant symbol in $\mathcal{L}$. Since $\tau$ is a constant symbol, $Val^{\mathcal{M}_{\Gamma^*}}(\tau) = \tau^{\mathcal{M}_{\Gamma^*}}$. Furthermore, by definition of the term model we have that $\tau^{\mathcal{M}_{\Gamma^*}} = \tau$.
+    \item $\tau \equiv f(t_1, ..., t_n)$ where $f$ is an $n$-place function symbol in $\mathcal{L}$ and $t_1, ..., t_n$ are closed terms. Since $f$ is a function symbol, $Val^{\mathcal{M}_{\Gamma^*}}(f(t_1, ..., t_n)) = f^{\mathcal{M}_{\Gamma^*}}(Val^{\mathcal{M}_{\Gamma^*}}(t_1), ..., Val^{\mathcal{M}_{\Gamma^*}}(t_n))$. By definition of the term model, this evaluates to $f(Val^{\mathcal{M}_{\Gamma^*}}(t_1), ..., Val^{\mathcal{M}_{\Gamma^*}}(t_n))$. All of the parameters $t_i$ are either constants $c^{\mathcal{M}_{\Gamma^*}}$ or functions $g^{\mathcal{M}_{\Gamma^*}}$ which evaluate to $c$ and $g$ respectively, as shown above and in the first case. Since this is the case, $Val^{\mathcal{M}_{\Gamma^*}}(\tau) = \tau$.
+\end{enumerate}
+
+\end{proof}
+\color{black}
+
+
+
+\end{document}

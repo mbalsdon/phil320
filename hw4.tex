@@ -1,0 +1,276 @@
+
+\documentclass[11pt]{article}
+\title{Phil 320\\Homework 4}
+\author{Mathew Balsdon / 21041694}
+\date{7 April 2022}%you can either leave this blank or write in the date you want to appear on the assignment
+
+%this just makes sure that all the standard math fonts/definitions/modes can be used.
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{bussproofs}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+%using fullpage does what you think it does, forces the full page to be used rather than the \lLaTeX norm, which is a reasonably narrow column.
+\usepackage{fullpage}
+
+
+%these commands allow you to declare theorems/lemmas/corollaries/definitions. They will all be numbered sequentially. That is, your document will remember what the last theorem number used was, and, the next theorem you write will have the subsequent number. As it is set up here, theorems, lemmas, etc. all share the same numbering sequence. That means, if you have a theorem and then a corollary, the theorem will be numbered as 1 as the corollary as 2.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+%To declare a theorem you can write:
+%
+%\begin{theorem}
+%There are infinitely many prime numbers.
+%\end{theorem}
+%
+%\begin{proof}
+%Assume that this is not the case. That is, assume that there is some greatest prime $p$. Then consider the number we get by taking 
+%
+%$$n=(2 \times 3 \times 5 \times 7 \times 11 \dots \times p) +1$$
+%
+%Clearly, $n$ cannot be prime, by our assumption. Therefore, it is composite. But the fundamental theorem of arithmetic tells us that every positive integer has a (unique) prime factorization. This means that $n$ is evenly divided by some prime number $q$. But notice that $q$ cannot be any of the primes between $2$ and $p$, because these will all have a remainder of $1$. Therefore, $n$ must be a prime factor greater than $p$. This is a contradiction.
+%
+%\end{proof}
+
+
+
+
+%Everything up to hear was just setting things up. Everything that you will actually see occurs between the \begin{document} and \end{document} tags
+\begin{document}
+
+\maketitle
+%This places  your name, the date, and the rest of the information you might have entered at the top of the file. 
+
+\noindent
+1. Recall the $\uparrow$ operator from the midterm. Remember that we added to our first-order language a new binary \textit{logical} connective: $\uparrow$ with the semantic clause:
+\begin{center}
+    $\mathcal{M}, s \models \varphi \uparrow \psi$ iff $\mathcal{M}, s \not\models \varphi$ or $\mathcal{M}, s \not\models \psi$
+\end{center}
+
+On your last homework, you came up with sequent rules for this operator and proved them sound. We will continue this process but, in order to simplify things, let's all consider the same rules. Let $\mathbf{LKS}$ be the sequent system obtained by adding the following two rules to $\mathbf{LK}$:
+\newenvironment{bprooftree}
+  {\leavevmode\hbox\bgroup}
+  {\DisplayProof\egroup}
+\[
+\begin{bprooftree}
+\AxiomC{$\varphi, \psi, \Gamma \Rightarrow \Delta$}
+\RightLabel{$\uparrow$R}
+\UnaryInfC{$\Gamma \Rightarrow \Delta, \varphi \uparrow \psi$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+\AxiomC{$\Gamma \Rightarrow \Delta, \varphi$}
+\AxiomC{$\Gamma \Rightarrow \Delta, \psi$}
+\RightLabel{$\uparrow$L}
+\BinaryInfC{$\varphi \uparrow \psi, \Gamma \Rightarrow \Delta$}
+\end{bprooftree}
+\]
+
+\noindent
+a) Prove that if $\Gamma \vdash_{\mathbf{LKS}} \varphi$ and $\Gamma \vdash_{\mathbf{LKS}} \psi$, then $\Gamma \vdash_{\mathbf{LKS}} \neg(\varphi \uparrow \psi)$.
+
+\color{RoyalBlue}
+\begin{proof}
+Since $\Gamma \vdash_{\mathbf{LKS}} \varphi$ and $\Gamma \vdash_{\mathbf{LKS}} \psi$, there are finite subsets $\Gamma_0 \subseteq \Gamma$ and $\Gamma_1 \subseteq \Gamma$ such that $\mathbf{LKS}$ derives $\Gamma_0 \Rightarrow \varphi$ and $\Gamma_1 \Rightarrow \psi$. Let $\Gamma_\cup = \Gamma_0 \cup \Gamma_1$. Since $\Gamma_0$ and $\Gamma_1$ are subsets of $\Gamma$, so is $\Gamma_\cup$. It is also the case that $\mathbf{LKS}$ derives $\Gamma_\cup \Rightarrow \varphi$ and $\Gamma_\cup \Rightarrow \psi$ by monotonicity. We can then build the following proof tree:
+
+\begin{prooftree}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\UnaryInfC{$\Gamma_\cup \Rightarrow \varphi$}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\UnaryInfC{$\Gamma_\cup \Rightarrow \psi$}
+\RightLabel{$\uparrow$L}
+\BinaryInfC{$\varphi \uparrow \psi, \Gamma_\cup \Rightarrow$}
+\RightLabel{$\neg$R}
+\UnaryInfC{$\Gamma_\cup \Rightarrow \neg(\varphi \uparrow \psi)$}
+\end{prooftree}
+
+\noindent
+This shows that we have a finite subset $\Gamma_\cup \subseteq \Gamma$ such that $\mathbf{LKS}$ derives $\Gamma_\cup \Rightarrow \neg(\varphi \uparrow \psi)$, therefore $\Gamma \vdash_{\mathbf{LKS}} \neg(\varphi \uparrow \psi)$.
+\end{proof}
+\color{black}
+
+
+
+\newpage
+
+
+
+\noindent
+b) Prove that if $\Gamma \vdash_{\mathbf{LKS}} \neg\varphi$ or $\Gamma \vdash_{\mathbf{LKS}} \neg\psi$, then $\Gamma \vdash_{\mathbf{LKS}} \varphi \uparrow \psi$.
+
+\color{RoyalBlue}
+\begin{proof}
+Since $\Gamma \vdash_{\mathbf{LKS}} \neg\varphi$ or $\Gamma \vdash_{\mathbf{LKS}} \neg \psi$, we have three cases: \\
+
+\noindent
+Case 1: There is a finite subset $\Gamma_0 \subseteq \Gamma$ such that $\mathbf{LKS}$ derives $\Gamma_0 \Rightarrow \neg\varphi$. We can build the following proof tree:
+
+\begin{prooftree}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\UnaryInfC{$\Gamma_0 \Rightarrow \neg\varphi$}
+\RightLabel{$\neg$L}
+\UnaryInfC{$\varphi, \Gamma_0 \Rightarrow$}
+\RightLabel{WL}
+\UnaryInfC{$\varphi, \psi, \Gamma_0 \Rightarrow$}
+\RightLabel{$\uparrow$R}
+\UnaryInfC{$\Gamma_0 \Rightarrow \varphi \uparrow \psi$}
+\end{prooftree}
+
+\noindent
+Case 2: There is a finite subset $\Gamma_1 \subseteq \Gamma$ such that $\mathbf{LKS}$ derives $\Gamma_1 \Rightarrow \neg\psi$. We can build the exact same proof tree as above, except that we swap all instances of $\varphi$ and $\psi$, as well as replacing $\Gamma_0$ with $\Gamma_1$. \\
+
+\noindent
+Case 3: Both case 1 and case 2 are true; there are finite subsets $\Gamma_0 \subseteq \Gamma$ and $\Gamma_1 \subset \Gamma$ such that $\mathbf{LKS}$ derives $\Gamma_0 \Rightarrow \neg\varphi$ and $\Gamma_1 \Rightarrow \neg\psi$. Consider $\Gamma_\cup = \Gamma_0 \cup \Gamma_1$, the same as in question 1a. We can build the following tree:
+
+\begin{prooftree}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\UnaryInfC{$\Gamma_\cup \Rightarrow \neg \varphi$}
+\LeftLabel{$\neg$L}
+\UnaryInfC{$\varphi, \Gamma_\cup \Rightarrow$}
+\LeftLabel{WR}
+\UnaryInfC{$\varphi, \Gamma_\cup \Rightarrow a$}
+\noLine\AxiomC{.}\noLine\UnaryInfC{.}\noLine\UnaryInfC{.}
+\UnaryInfC{$\Gamma_\cup \Rightarrow \neg \psi$}
+\RightLabel{$\neg$L}
+\UnaryInfC{$\psi, \Gamma_\cup \Rightarrow$}
+\RightLabel{WL}
+\UnaryInfC{$a, \psi, \Gamma_\cup \Rightarrow$}
+\RightLabel{CUT}
+\BinaryInfC{$\varphi, \Gamma_\cup, \psi, \Gamma_\cup \Rightarrow$}
+\RightLabel{CL}
+\UnaryInfC{$\varphi, \psi, \Gamma_\cup \Rightarrow$}
+\RightLabel{$\uparrow$R}
+\UnaryInfC{$\Gamma_\cup \Rightarrow \varphi \uparrow \psi$}
+\end{prooftree}
+
+\noindent
+In all three cases we have a finite subset $\Gamma_i \subseteq \Gamma$ such that $\mathbf{LKS}$ derives $\Gamma_i \Rightarrow \varphi \uparrow \psi$, therefore $\Gamma \vdash_{\mathbf{LKS}} \varphi \uparrow \psi$.
+\end{proof}
+\color{black}
+
+
+
+\newpage
+
+
+
+\noindent
+c) Let $\Gamma$ be a complete, consistent set of sentences. Prove that $(\varphi \uparrow \psi) \in \Gamma$ iff $\varphi \not\in \Gamma$ or $\psi \not\in \Gamma$.
+
+\color{RoyalBlue}
+\begin{proof}
+(Left to right) If $\varphi \in \Gamma$ and $\psi \in \Gamma$, then $\Gamma$ would be inconsistent (which goes against our assumption) since $\mathbf{LKS}$ derives $\Gamma_0 \Rightarrow$ where $\Gamma_0 = \{\varphi\} \cup \{\psi\} \cup \{\varphi \uparrow \psi\}$:
+
+\begin{prooftree}
+\AxiomC{$\varphi \Rightarrow \varphi$}
+\LeftLabel{WL}
+\UnaryInfC{$\varphi, \psi \Rightarrow \varphi$}
+\AxiomC{$\psi \Rightarrow \psi$}
+\RightLabel{WL}
+\UnaryInfC{$\varphi, \psi \Rightarrow \psi$}
+\RightLabel{$\uparrow$L}
+\BinaryInfC{$\varphi, \psi, \varphi \uparrow \psi \Rightarrow$}
+\end{prooftree}
+Since it can't be that $\varphi \in \Gamma$ and $\psi \in \Gamma$, and since $\Gamma$ is complete, either $\varphi \not\in \Gamma$ or $\psi \not\in \Gamma$. \\
+
+\noindent
+(Right to left) Since either $\varphi \not\in \Gamma$ or $\psi \not\in \Gamma$, we have three cases: \\
+
+\noindent
+Case 1: $\varphi \not\in \Gamma$; since $\Gamma$ is complete, $\neg\varphi \in \Gamma$. If $\neg(\varphi \uparrow \psi) \in \Gamma$, then $\Gamma$ is inconsistent, since $\mathbf{LKS}$ derives $\Gamma_0 \Rightarrow$ where $\Gamma_0 = \{\neg\varphi\} \cup \{\neg(\varphi \uparrow \psi)\}$:
+
+\begin{prooftree}
+\AxiomC{$\neg\varphi \Rightarrow \neg\varphi$}
+\RightLabel{$\neg$L}
+\UnaryInfC{$\varphi, \neg\varphi \Rightarrow$}
+\RightLabel{WL}
+\UnaryInfC{$\varphi, \psi, \neg\varphi \Rightarrow$}
+\RightLabel{$\uparrow$R}
+\UnaryInfC{$\neg\varphi \Rightarrow \varphi \uparrow \psi$}
+\RightLabel{$\neg$L}
+\UnaryInfC{$\neg\varphi, \neg(\varphi \uparrow \psi) \Rightarrow$}
+\end{prooftree}
+
+\noindent
+Case 2: $\psi \not\in \Gamma$; since $\Gamma$ is complete, $\neg\psi \in \Gamma$. We can build the same proof tree as above, swapping all instances of $\varphi$ and $\psi$, meaning that if $\neg(\varphi \uparrow \psi) \in \Gamma$, then $\Gamma$ is inconsistent. \\
+
+\noindent
+Case 3: $\varphi \not\in \Gamma$ and $\psi \not\in \Gamma$; since $\Gamma$ is complete, $\neg\varphi \in \Gamma$. We proceed the exact same as in case 1. \\
+
+\noindent
+In all three cases, if $\neg(\varphi \uparrow \psi) \in \Gamma$, then $\Gamma$ is inconsistent, therefore it must be the case that $(\varphi \uparrow \psi) \in \Gamma$. 
+
+\end{proof}
+\color{black}
+
+\noindent
+d) Prove that $\mathbf{LKS}$ is complete by adding the relevant material to the proof of completeness. In particular, you need to modify the truth lemma: 
+\begin{center}
+    $\mathcal{M}(\Gamma^*) \models \alpha$ iff $\alpha \in \Gamma^*$
+\end{center}
+
+\color{RoyalBlue}
+\begin{proof}
+We extend the inductive proof on $\alpha$ with a new clause: \\
+
+\noindent
+Case $\alpha \equiv B \uparrow C$: We have $\mathcal{M}(\Gamma^*) \models B \uparrow C$. This happens iff either $\mathcal{M}(\Gamma^*) \not\models B$ or $\mathcal{M}(\Gamma^*) \not\models C$ (by semantic definition of $\uparrow$). This happens iff either $B \not\in \Gamma^*$ or $C \not\in \Gamma^*$ (by construction of our term model $\mathcal{M}(\Gamma^*)$). This happens iff $(B \uparrow C) \in \Gamma^*$ (proven in question 1c). All relations are biconditional, therefore $\mathcal{M}(\Gamma^*) \models B \uparrow C$ iff $(B \uparrow C) \in \Gamma^*$.
+\end{proof}
+\color{black}
+
+
+
+\newpage
+
+
+
+\noindent
+2. Let $\mathcal{R} = \langle \mathbb{R}, <, +, \cdot, 0, 1 \rangle$ be the usual totally ordered structure of the real numbers (where the functions, relations, and constants have their natural interpretations). Define an \textit{infinitesimal} as a number that is non-zero, but infinitely small. That is, $\iota$ is an infinitesimal iff $0<\iota<\frac{1}{n}$, for all $n \in \mathbb{Z}^+$. Prove that there is a structure $R' = \langle R, <, +, \cdot, 0, 1 \rangle$ which is elementarily equivalent to $\mathcal{R}$ such that $R$ contains infinitesimals. \\
+(Please note the quantifier order in the definition of an infinitesimal.)
+
+\color{RoyalBlue}
+\begin{proof}
+Let $\Delta = \{0 < c\} \cup \{c < k: k \in \mathbb{R}^+\}$. For any $\Delta_0 \subseteq \Delta$ there is a $K$ such that all the sentences $c<k$ in $\Delta_0$ have $\neg(k<K)$. Expanding $\mathcal{R}$ to $R'$ where $c^{R'}=K$ makes it such that $R' \models \Gamma \cup \Delta_0$, therefore $\Gamma \cup \Delta$ is finitely satisfiable. This means $\Gamma \cup \Delta$ is also satisfiable (by compactness). Any model $S$ of $\Gamma \cup \Delta$ contains the infinitesimal $c^S$.
+\end{proof}
+\noindent
+Sorry if this is terribly wrong; I tried to follow the textbook as best I could. \\
+\color{black}
+
+\noindent
+3. Construct a Turing machine (you can either draw the state diagram, the machine table, or the formal specification) that, if it is given an unbroken string of '1's on an otherwise blank tape, will halt, and the read/write head will be scanning a square on which a '1' is written if there were an odd number of '1's originally, or a blank space if the original string was even in length. All other squares on the tape should be blank. (Use the basic alphabet containing only '1', the blank symbol, and the end-of-tape symbol.) \\
+
+\color{RoyalBlue}
+\noindent
+This Turing machine assumes that the input number string is at the very start of the tape. Underscores '\_' are used in place of blanks '$\sqcup$' in the diagram: \\
+\begin{center}\includegraphics[scale=0.75]{automaton (1).png}\end{center}
+The machine is just the Even Machine from the textbook (Example 14.6) but with a small change. Instead of looping infinitely on odd inputs (state $q_1$), it writes a 1, doesn't move, and then halts. On even inputs, it will halt like before with the head on a blank since blank reads are undefined.
+\color{black}
+
+
+
+\newpage
+
+
+
+\noindent
+4. Design a Turing machine (with alphabet \{$\rhd, \sqcup, 1$\}) that computes $f(n, m)  = n-m$. That is, when given two non-empty strings of strokes with length $n$ and $m$, respectively, where $n>m$, it computes $n-m$. \\
+
+\color{RoyalBlue}
+\noindent
+This Turing machine assumes that the input $m$-string is at the very start of the tape and that the input $n$-string comes after, separated by at least one blank. That is, the smaller number comes before the larger one. We do this to take advantage of the halt/end-of-tape symbol at the very left side of the tape. So, our inputs will look like:
+\begin{center}
+    $1_0$ ... $1_m$ $\sqcup_0$ ... $\sqcup_i$ $1_0$ ... $1_n$ $\sqcup_0$ $\sqcup_1$ ...
+\end{center}
+Underscores '\_' are used in place of blanks '$\sqcup$' in the diagram: \\
+\begin{center}\includegraphics[scale=0.75]{automaton.png}\end{center}
+The machine essentially moves to the space in between the strings and then moves right until it hits a 1, removes it, moves left until it hits a 1, removes it, ad infinitum until there are no more '1's in the $m$ string. Once this happens, it will move left until it hits the end-of-tape symbol. The state $q_1$ exists to fix an off-by-one error. The machine can never infinitely go right since $n>m$.
+\color{black}
+
+
+
+
+
+\end{document}
